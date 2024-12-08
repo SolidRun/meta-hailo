@@ -1,0 +1,18 @@
+diff --git a/hailort/cmake/external/protobuf.cmake b/hailort/cmake/external/protobuf.cmake
+index 1503920..7792876 100644
+--- a/hailort/cmake/external/protobuf.cmake
++++ b/hailort/cmake/external/protobuf.cmake
+@@ -41,7 +41,12 @@ if(NOT protobuf_POPULATED)
+         if(WIN32)
+             set(PROTOBUF_CONFIG_DIR ${PROTOBUF_INSTALL_DIR}/cmake)
+         else()
+-            set(PROTOBUF_CONFIG_DIR ${PROTOBUF_INSTALL_DIR}/lib/cmake/protobuf)
++            get_property(uselib64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
++            if(uselib64)
++                set(PROTOBUF_CONFIG_DIR ${PROTOBUF_INSTALL_DIR}/lib64/cmake/protobuf)
++            else()
++                set(PROTOBUF_CONFIG_DIR ${PROTOBUF_INSTALL_DIR}/lib/cmake/protobuf)
++            endif()
+         endif()
+ 
+         # Include host protobuf for protoc (https://stackoverflow.com/questions/53651181/cmake-find-protobuf-package-in-custom-directory)
